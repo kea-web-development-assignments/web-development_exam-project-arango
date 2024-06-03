@@ -2,7 +2,7 @@
 	"name": "web-development-exam-project",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "docker-compose up -d db && npx prisma generate && vite dev",
+		"dev": "docker-compose up -d && npx prisma generate && vite dev",
 		"docker:dev": "docker-compose up --build",
 		"build": "vite build",
 		"preview": "vite preview"
@@ -29,6 +29,7 @@
 		"@aws-sdk/client-s3": "^3.577.0",
 		"@beyonk/svelte-mapbox": "github:haid0109/svelte-mapbox-with-marker-click",
 		"@prisma/client": "^5.14.0",
+		"arangojs": "^8.8.1",
 		"bcrypt": "^5.1.1",
 		"jsonwebtoken": "^9.0.2",
 		"mailgun-js": "^0.22.0",

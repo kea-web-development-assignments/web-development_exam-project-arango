@@ -1,0 +1,27 @@
+//Create product
+INSERT {
+    _key: "777",
+    name: "Electric toothbrush 9001",
+    description: "It's such a good vibration, It's such a sweet sensation",
+    sku: "VVVV-9000-SSS-1",
+    price: 1.99,
+    stock: 1,
+    category: "Appliances"
+} INTO products
+
+//Read product
+FOR product IN products
+    FILTER product._key == "777"
+    RETURN product
+
+//Update product
+UPDATE { _key: "777" } WITH {
+    description: "It's such a good vibrationnnnnnn, It's such a sweeeeeeeeet sensationnnnnnnnnnn",
+    price: 19.9,
+    stock: 9999,
+} IN products
+
+//Delete product
+FOR product IN products
+    FILTER product._key == "777"
+    REMOVE product IN products

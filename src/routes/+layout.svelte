@@ -18,7 +18,7 @@
 </script>
 
 <body class="w-full">
-	<header class="h-20 relative flex justify-between items-center bg-white shadow-md p-4">
+	<header class="h-20 relative flex justify-between items-center bg-green-200 shadow-md p-4">
 		<a class="h-full shrink-0" href="/">
 			<picture class="h-full flex items-center">
 				<source media="(min-width:768px)" srcset={airbnbLogoBig}>

@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import db from '$lib/utils/db.js';
+import { Users } from '$lib/utils/arango.js';
 import errorHandler from '$lib/utils/errorHandler.js';
 import { fail, redirect } from '@sveltejs/kit';
 import { validateUser } from '$lib/utils/validator.js'
@@ -18,7 +19,21 @@ export async function load({ locals }) {
             },
         });
 
-        return { profileInfo };
+        ////arango
+
+        const arangoUser = await Users.document(locals.user.sub);
+
+        ////arango
+
+        return {
+            profileInfo: {
+                username: arangoUser.username,
+                firstName: arangoUser.firstName,
+                lastName: arangoUser.lastName,
+                email: arangoUser.email,
+                phoneNum: arangoUser.phoneNum,
+            }
+        };
     } catch (error) {
         console.error('Failed to get profile info:', error);
 
@@ -64,6 +79,12 @@ export const actions = {
                 data,
             });
 
+            ////arango
+
+            await Users.update({ _key: newData.id }, newData);
+
+            ////arango
+
             const profileInfo = {
                 username: newData.username,
                 firstName: newData.firstName,
@@ -90,6 +111,12 @@ export const actions = {
             data = validationResult;
 
             const user = await db.users.deleteAccount(locals.user.sub, data.password);
+
+            ////arango
+
+            await Users.remove({ _key: user.id });
+
+            ////arango
 
             await sendAccountDeletedMail(user);
         } catch (error) {

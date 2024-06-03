@@ -1,16 +1,15 @@
 version: "3.9"
 services:
-  web:
-    build:
-      context: .
-      args:
-        DB_CONNECTION_STRING: postgresql://postgres:postgres@db:5432/postgres?schema=public
-        ORIGIN: http://localhost:3000
-    depends_on:
-      db:
-        condition: service_healthy
+  arangodb:
+    image: arangodb:3.11.3
+    restart: always
     ports:
-      - 3000:3000
+      - 8529:8529
+    environment:
+      - ARANGO_NO_AUTH=1
+    volumes:
+      - ./arangodb:/var/lib/arangodb3
+      - ./arangoInit.js:/docker-entrypoint-initdb.d/arangoInit.js
 
   db:
     image: postgres
